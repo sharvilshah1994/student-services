@@ -1,6 +1,7 @@
 package com.studentapp.studentapp.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "school")
@@ -15,6 +16,8 @@ public class School {
     private String country;
     private int zip;
     private String phoneNumber;
+    @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Teacher> teachers;
 
     public School() {
         super();
@@ -82,5 +85,13 @@ public class School {
 
     public void setZip(int zip) {
         this.zip = zip;
+    }
+
+    public Set<Teacher> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(Set<Teacher> teachers) {
+        this.teachers = teachers;
     }
 }
