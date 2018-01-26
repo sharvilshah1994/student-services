@@ -1,4 +1,4 @@
-package com.studentapp.studentapp.services.implementation;
+package com.studentapp.studentapp.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;

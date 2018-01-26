@@ -3,7 +3,7 @@ package com.studentapp.studentapp.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.studentapp.studentapp.model.Student;
-import com.studentapp.studentapp.services.implementation.StudentService;
+import com.studentapp.studentapp.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

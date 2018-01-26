@@ -1,11 +1,11 @@
-package com.studentapp.studentapp.services.implementation.implementation;
+package com.studentapp.studentapp.services.implementation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.studentapp.studentapp.model.Student;
 import com.studentapp.studentapp.repository.StudentRepository;
-import com.studentapp.studentapp.services.implementation.StudentService;
+import com.studentapp.studentapp.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
