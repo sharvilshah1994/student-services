@@ -13,7 +13,12 @@ public class School {
     private String city;
     private String state;
     private String country;
+    private int zip;
     private String phoneNumber;
+
+    public School() {
+        super();
+    }
 
     public int getId() {
         return id;
@@ -69,5 +74,13 @@ public class School {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getZip() {
+        return zip;
+    }
+
+    public void setZip(int zip) {
+        this.zip = zip;
     }
 }

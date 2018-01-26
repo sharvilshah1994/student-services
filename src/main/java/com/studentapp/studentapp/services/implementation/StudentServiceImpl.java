@@ -13,13 +13,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.studentapp.studentapp.config.Constants.*;
+
 @Component
 public class StudentServiceImpl implements StudentService {
-
-    private static final String FIRST_NAME = "first_name";
-    private static final String LAST_NAME = "last_name";
-    private static final String AGE = "age";
-    private static final String STATUS = "status";
 
     private final StudentRepository studentRepository;
     private ObjectMapper objectMapper;
