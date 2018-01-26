@@ -9,5 +9,6 @@ import java.util.List;
 public interface StudentService {
 
     List<Student> getAllStudentData();
-    ResponseEntity<Student> addStudentData(JsonNode jsonNode);
+    ResponseEntity<?> addStudentData(JsonNode jsonNode);
+    ResponseEntity<?> updateStudentData(JsonNode jsonNode);
 }
