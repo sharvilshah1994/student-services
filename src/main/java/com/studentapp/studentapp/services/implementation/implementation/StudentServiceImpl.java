@@ -64,20 +64,32 @@ public class StudentServiceImpl implements StudentService{
         Student student = studentRepository.findById(id);
         if (student == null) {
             objectNode.put("Status", "ERROR! `id` " + id + " does not exist.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(objectNode);
-        } else {
-            if (jsonNode.has("first_name")) {
-                student.setFirstName(jsonNode.get("first_name").asText());
-            }
-            if (jsonNode.has("last_name")) {
-                student.setLastName(jsonNode.get("last_name").asText());
-            }
-            if (jsonNode.has("age")) {
-                student.setAge(jsonNode.get("age").asInt());
-            }
-            studentRepository.save(student);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(objectNode);
         }
+        if (jsonNode.has("first_name")) {
+            student.setFirstName(jsonNode.get("first_name").asText());
+        }
+        if (jsonNode.has("last_name")) {
+            student.setLastName(jsonNode.get("last_name").asText());
+        }
+        if (jsonNode.has("age")) {
+            student.setAge(jsonNode.get("age").asInt());
+        }
+        studentRepository.save(student);
         student = studentRepository.findById(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(student);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteStudentData(long id) {
+        Student student = studentRepository.findById(id);
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        if (student == null) {
+            objectNode.put("status", "ERROR! Id: " + id + " does not exist.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(objectNode);
+        }
+        studentRepository.delete(student);
+        objectNode.put("status", "SUCCESS! Id: " + id + " deleted.");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
     }
 }

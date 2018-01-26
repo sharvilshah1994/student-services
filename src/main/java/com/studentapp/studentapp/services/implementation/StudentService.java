@@ -11,4 +11,5 @@ public interface StudentService {
     List<Student> getAllStudentData();
     ResponseEntity<?> addStudentData(JsonNode jsonNode);
     ResponseEntity<?> updateStudentData(JsonNode jsonNode);
+    ResponseEntity<?> deleteStudentData(long id);
 }

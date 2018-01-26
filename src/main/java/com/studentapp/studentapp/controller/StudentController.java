@@ -1,7 +1,6 @@
 package com.studentapp.studentapp.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.studentapp.studentapp.model.Student;
 import com.studentapp.studentapp.services.implementation.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,12 @@ public class StudentController {
     @ResponseBody
     public ResponseEntity<?> updateStudentData(@RequestBody JsonNode jsonNode) {
         return studentService.updateStudentData(jsonNode);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/{id}")
+    @ResponseBody
+    public ResponseEntity<?> deleteStudentData(@PathVariable("id") long id) {
+        return studentService.deleteStudentData(id);
     }
 
 
