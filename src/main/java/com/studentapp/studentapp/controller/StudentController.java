@@ -29,7 +29,7 @@ public class StudentController {
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<ObjectNode> addStudentData(@RequestBody JsonNode jsonNode)  {
+    public ResponseEntity<ObjectNode> addStudentData(@RequestBody JsonNode jsonNode) {
         return studentService.addStudentData(jsonNode);
     }
 
