@@ -52,18 +52,18 @@ public class StudentServiceImpl implements StudentService {
         newStudent.setLastName(lastName);
         newStudent.setAge(age);
         studentRepository.save(newStudent);
-        objectNode.put("id", newStudent.getId());
+        objectNode.put(ID, newStudent.getId());
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
     }
 
     @Override
     public ResponseEntity<ObjectNode> updateStudentData(JsonNode jsonNode) {
         ObjectNode objectNode = objectMapper.createObjectNode();
-        if (!jsonNode.has("id")) {
+        if (!jsonNode.has(ID)) {
             objectNode.put(STATUS, "ERROR! `id` is a required field.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(objectNode);
         }
-        long id = jsonNode.get("id").asLong();
+        long id = jsonNode.get(ID).asLong();
         Student student = studentRepository.findById(id);
         if (student == null) {
             objectNode.put(STATUS, "ERROR! `id` " + id + " does not exist.");

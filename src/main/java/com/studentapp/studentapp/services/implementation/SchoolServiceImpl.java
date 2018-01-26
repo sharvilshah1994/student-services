@@ -61,7 +61,45 @@ public class SchoolServiceImpl implements SchoolService {
             newSchool.setPhoneNumber(jsonNode.get(PHONE_NUMBER).asText());
         }
         schoolRepository.save(newSchool);
-        objectNode.put("id", newSchool.getId());
+        objectNode.put(ID, newSchool.getId());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
+    }
+
+    @Override
+    public ResponseEntity<ObjectNode> updateSchoolData(JsonNode jsonNode) {
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        if (!jsonNode.has(ID)) {
+            objectNode.put(STATUS, "ERROR! `id` field is required to update school data.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(objectNode);
+        }
+        School school = schoolRepository.findOne(jsonNode.get(ID).asLong());
+        if (school == null) {
+            objectNode.put(STATUS, "ERROR! School with id: " + jsonNode.get(ID).asLong() + " does not exist!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(objectNode);
+        }
+        if (jsonNode.has(SCHOOL_NAME)) {
+            school.setSchoolName(jsonNode.get(SCHOOL_NAME).asText());
+        }
+        if (jsonNode.has(STREET_ADDRESS)) {
+            school.setStreetAddress(jsonNode.get(STREET_ADDRESS).asText());
+        }
+        if (jsonNode.has(CITY)) {
+            school.setCity(jsonNode.get(CITY).asText());
+        }
+        if (jsonNode.has(STATE)) {
+            school.setState(jsonNode.get(STATE).asText());
+        }
+        if (jsonNode.has(COUNTRY)) {
+            school.setCountry(jsonNode.get(COUNTRY).asText());
+        }
+        if (jsonNode.has(ZIP)) {
+            school.setZip(jsonNode.get(ZIP).asInt());
+        }
+        if (jsonNode.has(PHONE_NUMBER)) {
+            school.setPhoneNumber(jsonNode.get(PHONE_NUMBER).asText());
+        }
+        schoolRepository.save(school);
+        objectNode.put(STATUS, "SUCCESS! Modified the records.");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
     }
 }

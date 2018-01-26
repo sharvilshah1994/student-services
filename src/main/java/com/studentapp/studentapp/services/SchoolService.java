@@ -12,4 +12,6 @@ public interface SchoolService {
     List<School> getAllSchoolData();
 
     ResponseEntity<ObjectNode> addSchoolData(JsonNode jsonNode);
+
+    ResponseEntity<ObjectNode> updateSchoolData(JsonNode jsonNode);
 }

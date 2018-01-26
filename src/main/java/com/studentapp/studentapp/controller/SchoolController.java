@@ -32,4 +32,10 @@ public class SchoolController {
     public ResponseEntity<ObjectNode> addSchoolData(@RequestBody JsonNode jsonNode) {
         return schoolService.addSchoolData(jsonNode);
     }
+
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<ObjectNode> updateSchoolData(@RequestBody JsonNode jsonNode) {
+        return schoolService.updateSchoolData(jsonNode);
+    }
 }
