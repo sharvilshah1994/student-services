@@ -38,4 +38,10 @@ public class SchoolController {
     public ResponseEntity<ObjectNode> updateSchoolData(@RequestBody JsonNode jsonNode) {
         return schoolService.updateSchoolData(jsonNode);
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, value = "/{id}")
+    @ResponseBody
+    public ResponseEntity<ObjectNode> deleteSchoolData(@PathVariable("id") long id) {
+        return schoolService.deleteSchoolData(id);
+    }
 }

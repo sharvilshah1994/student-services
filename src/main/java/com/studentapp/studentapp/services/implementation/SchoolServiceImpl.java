@@ -102,4 +102,17 @@ public class SchoolServiceImpl implements SchoolService {
         objectNode.put(STATUS, "SUCCESS! Modified the records.");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
     }
+
+    @Override
+    public ResponseEntity<ObjectNode> deleteSchoolData(long id) {
+        ObjectNode objectNode = objectMapper.createObjectNode();
+        School school = schoolRepository.findOne(id);
+        if (school == null) {
+            objectNode.put(STATUS, "School with id: " + id + " does not exist.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(objectNode);
+        }
+        schoolRepository.delete(id);
+        objectNode.put(STATUS, "School with id: " + id + " is DELETED.");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
+    }
 }

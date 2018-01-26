@@ -14,4 +14,6 @@ public interface SchoolService {
     ResponseEntity<ObjectNode> addSchoolData(JsonNode jsonNode);
 
     ResponseEntity<ObjectNode> updateSchoolData(JsonNode jsonNode);
+
+    ResponseEntity<ObjectNode> deleteSchoolData(long id);
 }
