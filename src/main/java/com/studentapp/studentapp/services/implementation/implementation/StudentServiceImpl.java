@@ -15,6 +15,11 @@ import java.util.List;
 
 @Component
 public class StudentServiceImpl implements StudentService{
+    
+    private static final String FIRST_NAME = "first_name";
+    private static final String LAST_NAME = "last_name";
+    private static final String AGE = "age";
+    private static final String STATUS = "status";
 
     private final StudentRepository studentRepository;
     private ObjectMapper objectMapper;
@@ -31,18 +36,18 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public ResponseEntity<?> addStudentData(JsonNode jsonNode) {
+    public ResponseEntity<ObjectNode> addStudentData(JsonNode jsonNode) {
         ObjectNode objectNode = objectMapper.createObjectNode();
-        if (!jsonNode.has("first_name") || !jsonNode.has("last_name")
-                || !jsonNode.has("age")) {
-            objectNode.put("Status", "ERROR! `first_name`, `last_name` & `age` are required parameters.");
+        if (!jsonNode.has(FIRST_NAME) || !jsonNode.has(LAST_NAME)
+                || !jsonNode.has(AGE)) {
+            objectNode.put(STATUS, "ERROR! `first_name`, `last_name` & `age` are required parameters.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(objectNode);
         }
-        String firstName = jsonNode.get("first_name").asText();
-        String lastName = jsonNode.get("last_name").asText();
-        int age = jsonNode.get("age").asInt();
+        String firstName = jsonNode.get(FIRST_NAME).asText();
+        String lastName = jsonNode.get(LAST_NAME).asText();
+        int age = jsonNode.get(AGE).asInt();
         if (studentRepository.findByFirstNameAndLastNameAndAge(firstName, lastName, age) != null) {
-            objectNode.put("Status", "ERROR! Similar record exists.");
+            objectNode.put(STATUS, "ERROR! Similar record exists.");
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(null);
         }
         Student newStudent = new Student();
@@ -50,46 +55,49 @@ public class StudentServiceImpl implements StudentService{
         newStudent.setLastName(lastName);
         newStudent.setAge(age);
         studentRepository.save(newStudent);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(newStudent);
+        objectNode.put("id", newStudent.getId());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
     }
 
     @Override
-    public ResponseEntity<?> updateStudentData(JsonNode jsonNode) {
+    public ResponseEntity<ObjectNode> updateStudentData(JsonNode jsonNode) {
         ObjectNode objectNode = objectMapper.createObjectNode();
         if (!jsonNode.has("id")) {
-            objectNode.put("Status", "ERROR! `id` is a required field.");
+            objectNode.put(STATUS, "ERROR! `id` is a required field.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(objectNode);
         }
         long id = jsonNode.get("id").asLong();
         Student student = studentRepository.findById(id);
         if (student == null) {
-            objectNode.put("Status", "ERROR! `id` " + id + " does not exist.");
+            objectNode.put(STATUS, "ERROR! `id` " + id + " does not exist.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(objectNode);
         }
-        if (jsonNode.has("first_name")) {
-            student.setFirstName(jsonNode.get("first_name").asText());
+        if (jsonNode.has(FIRST_NAME)) {
+            student.setFirstName(jsonNode.get(FIRST_NAME).asText());
         }
-        if (jsonNode.has("last_name")) {
-            student.setLastName(jsonNode.get("last_name").asText());
+        if (jsonNode.has(LAST_NAME)) {
+            student.setLastName(jsonNode.get(LAST_NAME).asText());
         }
-        if (jsonNode.has("age")) {
-            student.setAge(jsonNode.get("age").asInt());
+        if (jsonNode.has(AGE)) {
+            student.setAge(jsonNode.get(AGE).asInt());
         }
         studentRepository.save(student);
-        student = studentRepository.findById(id);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(student);
+        objectNode.put(FIRST_NAME, student.getFirstName());
+        objectNode.put(LAST_NAME, student.getLastName());
+        objectNode.put(AGE, student.getAge());
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
     }
 
     @Override
-    public ResponseEntity<?> deleteStudentData(long id) {
+    public ResponseEntity<ObjectNode> deleteStudentData(long id) {
         Student student = studentRepository.findById(id);
         ObjectNode objectNode = objectMapper.createObjectNode();
         if (student == null) {
-            objectNode.put("status", "ERROR! Id: " + id + " does not exist.");
+            objectNode.put(STATUS, "ERROR! Id: " + id + " does not exist.");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(objectNode);
         }
         studentRepository.delete(student);
-        objectNode.put("status", "SUCCESS! Id: " + id + " deleted.");
+        objectNode.put(STATUS, "SUCCESS! Id: " + id + " deleted.");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectNode);
     }
 }
