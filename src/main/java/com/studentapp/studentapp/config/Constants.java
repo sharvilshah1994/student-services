@@ -14,6 +14,9 @@ public final class Constants {
     public static final String COUNTRY = "country";
     public static final String PHONE_NUMBER = "phone_number";
     public static final String ID = "id";
+    public static final String SCHOOL_ID = "school_id";
+    public static final String SUBJECT_NAME = "subject_name";
+    public static final String TEACHER_ID = "teacher_id";
 
     public Constants() {
         super();

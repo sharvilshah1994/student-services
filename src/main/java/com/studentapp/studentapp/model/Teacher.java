@@ -3,6 +3,7 @@ package com.studentapp.studentapp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
@@ -12,11 +13,12 @@ public class Teacher {
     private long id;
     private String firstName;
     private String lastName;
-    private String subject;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "school_id")
     @JsonIgnore
     private School school;
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Subject> subjects;
 
     public long getId() {
         return id;
@@ -42,19 +44,19 @@ public class Teacher {
         this.lastName = lastName;
     }
 
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public School getSchool() {
         return school;
     }
 
     public void setSchool(School school) {
         this.school = school;
+    }
+
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
     }
 }
