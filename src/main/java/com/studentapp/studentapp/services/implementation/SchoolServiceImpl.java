@@ -2,8 +2,12 @@ package com.studentapp.studentapp.services.implementation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.studentapp.studentapp.model.School;
+import com.studentapp.studentapp.model.Student;
+import com.studentapp.studentapp.model.Subject;
+import com.studentapp.studentapp.model.Teacher;
 import com.studentapp.studentapp.repository.SchoolRepository;
 import com.studentapp.studentapp.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static com.studentapp.studentapp.config.Constants.*;
 
@@ -28,8 +34,47 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
-    public List<School> getAllSchoolData() {
-        return schoolRepository.findAll();
+    public ResponseEntity<ArrayNode> getSchoolData() {
+        List<ObjectNode> resultSchools = new ArrayList<>();
+        List<School> schoolList = schoolRepository.findAll();
+        for (School school : schoolList) {
+            int studentCount = 0;
+            int teacherCount = 0;
+            int subjectCount = 0;
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            long schoolId = school.getId();
+            Set<Student> studentSet = school.getStudents();
+            for (Student student : studentSet) {
+                if (student.getSchool().getId() == schoolId) {
+                    studentCount++;
+                }
+            }
+            Set<Teacher> teacherSet = school.getTeachers();
+            for (Teacher teacher : teacherSet) {
+                if (teacher.getSchool().getId() == schoolId) {
+                    teacherCount++;
+                }
+            }
+            Set<Subject> subjectSet = school.getSubjects();
+            for (Subject subject : subjectSet) {
+                if (subject.getSchool().getId() == schoolId) {
+                    subjectCount++;
+                }
+            }
+            objectNode.put(ID, schoolId);
+            objectNode.put(SCHOOL_NAME, school.getSchoolName());
+            objectNode.put(STREET_ADDRESS, school.getStreetAddress());
+            objectNode.put(CITY, school.getCity());
+            objectNode.put(STATE, school.getState());
+            objectNode.put(COUNTRY, school.getCountry());
+            objectNode.put(ZIP, school.getZip());
+            objectNode.put(PHONE_NUMBER, school.getPhoneNumber());
+            objectNode.put("teacher_count", teacherCount);
+            objectNode.put("subject_count", subjectCount);
+            objectNode.put("student_count", studentCount);
+            resultSchools.add(objectNode);
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(objectMapper.valueToTree(resultSchools));
     }
 
     @Override

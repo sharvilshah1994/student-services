@@ -1,5 +1,7 @@
 package com.studentapp.studentapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,11 @@ public class Student {
     private String firstName;
     private String lastName;
     private int age;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "school_id")
+    @JsonIgnore
+    private School school;
+
 
     public long getId() {
         return id;
@@ -42,5 +49,13 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 }

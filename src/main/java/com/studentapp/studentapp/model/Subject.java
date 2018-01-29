@@ -15,6 +15,10 @@ public class Subject {
     @JoinColumn(name = "teacher_id")
     @JsonIgnore
     private Teacher teacher;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "school_id")
+    @JsonIgnore
+    private School school;
 
     public long getId() {
         return id;
@@ -38,5 +42,13 @@ public class Subject {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 }
