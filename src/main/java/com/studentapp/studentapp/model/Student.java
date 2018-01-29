@@ -12,7 +12,7 @@ public class Student {
     private String lastName;
     private int age;
 
-    public Student() {
+    Student() {
         super();
     }
 

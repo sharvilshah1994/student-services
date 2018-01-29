@@ -18,7 +18,7 @@ public final class Constants {
     public static final String SUBJECT_NAME = "subject_name";
     public static final String TEACHER_ID = "teacher_id";
 
-    public Constants() {
+    Constants() {
         super();
     }
 
