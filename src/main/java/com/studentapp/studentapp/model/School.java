@@ -19,10 +19,6 @@ public class School {
     @OneToMany(mappedBy = "school", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Teacher> teachers;
 
-    School() {
-        super();
-    }
-
     public long getId() {
         return id;
     }

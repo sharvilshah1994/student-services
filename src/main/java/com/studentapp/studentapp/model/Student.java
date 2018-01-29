@@ -12,10 +12,6 @@ public class Student {
     private String lastName;
     private int age;
 
-    Student() {
-        super();
-    }
-
     public long getId() {
         return id;
     }
