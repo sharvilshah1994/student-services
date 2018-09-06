@@ -17,5 +17,5 @@ EXPOSE 5000
 # Add the application's jar to the container
 ADD ${JAR_FILE} student-services.jar
 
-# Run the jar file
+# Run the jar file docker
 ENTRYPOINT ["java","-jar","/student-services.jar"]
