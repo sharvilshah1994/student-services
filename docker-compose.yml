@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  docker-mysql:
+    image: mysql:5.7.23
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=abc123
+      - MYSQL_DATABASE=school
+      - MYSQL_PASSWORD=abc123
+      - MYSQL_USER=sharvil
+
+  core:
+    build: .
+    ports:
+      - 5000:5000
+    depends_on:
+      - docker-mysql
