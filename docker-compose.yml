@@ -12,7 +12,7 @@ services:
       - MYSQL_USER=sharvil
 
   core:
-    build: .
+    image: sharvilshah/student-services
     ports:
       - 5000:5000
     depends_on:

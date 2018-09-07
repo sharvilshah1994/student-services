@@ -1,0 +1,35 @@
+{
+  "Services": {
+    "core": {
+      "Image": "sharvilshah/student-services@sha256:e397981077d802955dc9141b499f73e475d825692dfd584de8f8dd30516a42fd",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 5000,
+          "Protocol": "tcp"
+        }
+      ]
+    },
+    "docker-mysql": {
+      "Env": [
+        "MYSQL_ROOT_PASSWORD=abc123",
+        "MYSQL_DATABASE=school",
+        "MYSQL_PASSWORD=abc123",
+        "MYSQL_USER=sharvil"
+      ],
+      "Image": "mysql@sha256:1d8f471c7e2929ee1e2bfbc1d16fc8afccd2e070afed24805487e726ce601a6d",
+      "Networks": [
+        "default"
+      ],
+      "Ports": [
+        {
+          "Port": 3306,
+          "Protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "Version": "0.1"
+}
